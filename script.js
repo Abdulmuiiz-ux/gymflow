@@ -1,35 +1,78 @@
 
-const equipment = [
-    { id: 1, name: "Leg Press", category: "Machine", status: "Occupied" },
-    { id: 2, name: "Chest Press", category: "Machine", status: "Available" },
-    { id: 3, name: "Lat Pulldown", category: "Machine", status: "Occupied" },
-    { id: 4, name: "Treadmill", category: "Cardio", status: "Available" },
-    { id: 5, name: "Exercise Bike", category: "Cardio", status: "Available" },
-    { id: 6, name: "Dumbbells", category: "Free Weights", status: "Unknown" },
-    { id: 7, name: "Barbell", category: "Free Weights", status: "Unknown" },
-    { id: 8, name: "Bench Press", category: "Free Weights", status: "Occupied" }
-];
-
 const equipmentContainer = document.querySelector("#equipment");
 
-function displayEquipment() {
+async function displayEquipment() {
     equipmentContainer.innerHTML = `
         <h2>Gym equipment</h2>
-        <p class="equipment-intro">
-            Check the latest reported status before choosing your exercise.
-        </p>
-        <div class="equipment-grid">
-            ${equipment.map(item => `
-                <article class="equipment-card">
-                    <h3>${item.name}</h3>
-                    <p>${item.category}</p>
-                    <span class="status status-${item.status.toLowerCase().replaceAll(" ", "-")}">
-                        ${item.status}
-                    </span>
-                </article>
-            `).join("")}
-        </div>
+        <p>Loading equipment...</p>
     `;
+
+    try {
+        const { data, error } = await supabaseClient
+            .from("equipment_latest_status")
+            .select("*")
+            .order("equipment_id", { ascending: true });
+
+        if (error) {
+            throw error;
+        }
+
+        if (!data || data.length === 0) {
+            equipmentContainer.innerHTML = `
+                <h2>Gym equipment</h2>
+                <p>No equipment found.</p>
+            `;
+            return;
+        }
+
+        equipmentContainer.innerHTML = `
+            <h2>Gym equipment</h2>
+            <p class="equipment-intro">
+                Check the latest reported status before choosing your exercise.
+            </p>
+
+            <div class="equipment-grid">
+                ${data.map(item => {
+                    const status = item.status || "Unknown";
+                    const statusClass = status
+                        .toLowerCase()
+                        .replaceAll(" ", "-");
+
+                    return `
+                        <article class="equipment-card">
+                            <h3>${escapeHTML(item.name)}</h3>
+                            <p>${escapeHTML(item.category)}</p>
+                            <span class="status status-${statusClass}">
+                                ${escapeHTML(status)}
+                            </span>
+                            <p class="reported-time">
+                                ${item.reported_at
+                                    ? `Last reported: ${new Date(item.reported_at).toLocaleString()}`
+                                    : "No reports yet"}
+                            </p>
+                        </article>
+                    `;
+                }).join("")}
+            </div>
+        `;
+    } catch (error) {
+        console.error("Error loading equipment:", error);
+
+        equipmentContainer.innerHTML = `
+            <h2>Gym equipment</h2>
+            <p>We couldn't load equipment right now. Please try again later.</p>
+        `;
+    }
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
 }
 
 displayEquipment();
