@@ -47,8 +47,15 @@ async function displayEquipment() {
                             </span>
                             <p class="reported-time">
                                 ${item.reported_at
-                                    ? `Last reported: ${new Date(item.reported_at).toLocaleString()}`
-                                    : "No reports yet"}
+                                ? `Last reported: ${new Date(item.reported_at).toLocaleString("en-GB", {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    hour12: true
+                                })}`
+                                : "No reports yet"}
                             </p>
                         </article>
                     `;
