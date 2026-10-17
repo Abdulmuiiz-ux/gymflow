@@ -80,3 +80,79 @@ footer {
         padding: 20px;
     }
 }
+
+/* Equipment cards */
+
+.equipment-intro {
+    margin-bottom: 20px;
+}
+
+.equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.equipment-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.equipment-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+}
+
+.equipment-card h3 {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+}
+
+.equipment-card p {
+    font-size: 0.9rem;
+    margin-bottom: 16px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.status-available {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-occupied {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-unknown {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.status-out-of-service {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+@media (max-width: 750px) {
+    .equipment-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .equipment-grid {
+        grid-template-columns: 1fr;
+    }
+}
