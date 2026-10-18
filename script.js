@@ -1,6 +1,9 @@
 
 const equipmentContainer = document.querySelector("#equipment");
 
+const REPORT_COOLDOWN_MS = 10000;
+const equipmentCooldowns = new Map();
+
 async function displayEquipment() {
     equipmentContainer.innerHTML = `
         <h2>Gym equipment</h2>
@@ -93,7 +96,17 @@ async function displayEquipment() {
     }
 }
 
+
 async function submitReport(equipmentId, status) {
+    const now = Date.now();
+    const cooldownEnds = equipmentCooldowns.get(equipmentId) || 0;
+
+    if (now < cooldownEnds) {
+        const secondsLeft = Math.ceil((cooldownEnds - now) / 1000);
+        alert(`Please wait ${secondsLeft} seconds before reporting this equipment again.`);
+        return;
+    }
+
     const buttons = document.querySelectorAll(".report-buttons button");
     buttons.forEach(button => button.disabled = true);
 
@@ -107,12 +120,20 @@ async function submitReport(equipmentId, status) {
 
         if (error) throw error;
 
-        alert("Report submitted successfully!");
+        equipmentCooldowns.set(
+            equipmentId,
+            Date.now() + REPORT_COOLDOWN_MS
+        );
+
+        alert("Report submitted successfully! You can report this equipment again in 10 seconds.");
+
         await displayEquipment();
+
     } catch (error) {
         console.error("Error submitting report:", error);
-
         alert("We couldn't submit your report. Please try again.");
+
+    } finally {
         buttons.forEach(button => button.disabled = false);
     }
 }
