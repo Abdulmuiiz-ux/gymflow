@@ -33,14 +33,22 @@ equipmentContainer.innerHTML = `
         Check the latest reported status before choosing your exercise.
     </p>
 
-    <div class="equipment-search">
-        <input
-            type="text"
-            id="equipmentSearch"
-            placeholder="Search gym equipment..."
-            aria-label="Search gym equipment"
-        >
-    </div>
+    
+<div class="equipment-search">
+    <input
+        type="text"
+        id="equipmentSearch"
+        placeholder="Search gym equipment..."
+        aria-label="Search gym equipment"
+    >
+
+    <select id="categoryFilter" aria-label="Filter by category">
+        <option value="all">All equipment</option>
+        <option value="Machine">Machines</option>
+        <option value="Cardio">Cardio</option>
+        <option value="Free Weights">Free Weights</option>
+    </select>
+</div>
 
     <div class="equipment-grid">
 
@@ -183,24 +191,37 @@ function escapeHTML(value) {
         "'": "&#39;"
     })[character]);
 }
-
-
+    
 displayEquipment().then(() => {
     const searchInput = document.querySelector("#equipmentSearch");
+    const categoryFilter = document.querySelector("#categoryFilter");
 
-    if (!searchInput) return;
+    if (!searchInput || !categoryFilter) return;
 
-    searchInput.addEventListener("input", () => {
+    function filterEquipment() {
         const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedCategory = categoryFilter.value;
 
         const equipmentCards = document.querySelectorAll(".equipment-card");
 
         equipmentCards.forEach(card => {
-            const equipmentName = card.querySelector("h3").textContent.toLowerCase();
+            const equipmentName =
+                card.querySelector("h3").textContent.toLowerCase();
 
-            card.style.display = equipmentName.includes(searchTerm)
-                ? ""
-                : "none";
+            const equipmentCategory =
+                card.querySelector("p").textContent.trim();
+
+            const matchesName = equipmentName.includes(searchTerm);
+
+            const matchesCategory =
+                selectedCategory === "all" ||
+                equipmentCategory === selectedCategory;
+
+            card.style.display =
+                matchesName && matchesCategory ? "" : "none";
         });
-    });
+    }
+
+    searchInput.addEventListener("input", filterEquipment);
+    categoryFilter.addEventListener("change", filterEquipment);
 });
