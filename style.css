@@ -317,3 +317,22 @@ footer {
     background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDMrkUaeAqP62aaxTTdXbDDs8WKmofarKdstZbLBRB2okIIJphuJeOpbY&s=10");
 }
 
+
+/* Alternative exercise suggestion */
+
+.alternative-suggestion {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background-color: #e8f5ed;
+    border-left: 4px solid #16a36a;
+    border-radius: 6px;
+    color: #24543b;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.alternative-suggestion strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #108052;
+}
