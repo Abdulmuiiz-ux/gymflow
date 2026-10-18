@@ -252,3 +252,68 @@ footer {
         animation-duration: 0.01ms !important;
     }
 }
+
+
+/* Equipment-specific line-art watermarks */
+
+.equipment-card {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.equipment-card::after {
+    content: "";
+    position: absolute;
+    top: 12px;
+    right: 8px;
+    width: 115px;
+    height: 115px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.13;
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Leg Press */
+.equipment-1::after {
+    background-image: url("https://api.iconify.design/mdi/weight-lifter.svg?color=%2316a36a");
+}
+
+/* Chest Press */
+.equipment-2::after {
+    background-image: url("https://api.iconify.design/mdi/dumbbell.svg?color=%2316a36a");
+}
+
+/* Lat Pulldown */
+.equipment-3::after {
+    background-image: url("https://api.iconify.design/mdi/arm-flex.svg?color=%2316a36a");
+}
+
+/* Treadmill */
+.equipment-4::after {
+    background-image: url("https://api.iconify.design/mdi/treadmill.svg?color=%2316a36a");
+}
+
+/* Exercise Bike */
+.equipment-5::after {
+    background-image: url("https://api.iconify.design/mdi/bicycle.svg?color=%2316a36a");
+}
+
+/* Dumbbells */
+.equipment-6::after {
+    background-image: url("https://api.iconify.design/mdi/dumbbell.svg?color=%2316a36a");
+}
+
+/* Barbell */
+.equipment-7::after {
+    background-image: url("https://api.iconify.design/mdi/barbell.svg?color=%2316a36a");
+}
+
+/* Bench Press */
+.equipment-8::after {
+    background-image: url("https://api.iconify.design/mdi/weight-lifter.svg?color=%2316a36a");
+}
+
