@@ -26,11 +26,24 @@ async function displayEquipment() {
             return;
         }
 
-        equipmentContainer.innerHTML = `
-            <h2>Gym equipment</h2>
-            <p class="equipment-intro">
-                Check the latest reported status before choosing your exercise.
-            </p>
+        
+equipmentContainer.innerHTML = `
+    <h2>Gym equipment</h2>
+    <p class="equipment-intro">
+        Check the latest reported status before choosing your exercise.
+    </p>
+
+    <div class="equipment-search">
+        <input
+            type="text"
+            id="equipmentSearch"
+            placeholder="Search gym equipment..."
+            aria-label="Search gym equipment"
+        >
+    </div>
+
+    <div class="equipment-grid">
+
 
             <div class="equipment-grid">
                 ${data.map(item => {
@@ -171,4 +184,23 @@ function escapeHTML(value) {
     })[character]);
 }
 
-displayEquipment();
+
+displayEquipment().then(() => {
+    const searchInput = document.querySelector("#equipmentSearch");
+
+    if (!searchInput) return;
+
+    searchInput.addEventListener("input", () => {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+
+        const equipmentCards = document.querySelectorAll(".equipment-card");
+
+        equipmentCards.forEach(card => {
+            const equipmentName = card.querySelector("h3").textContent.toLowerCase();
+
+            card.style.display = equipmentName.includes(searchTerm)
+                ? ""
+                : "none";
+        });
+    });
+});
