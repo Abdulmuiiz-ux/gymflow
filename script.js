@@ -35,6 +35,23 @@ async function displayEquipment() {
             <div class="equipment-grid">
                 ${data.map(item => {
                     const status = item.status || "Unknown";
+                    
+const alternatives = {
+    "Leg Press": "Try goblet squats or bodyweight squats.",
+    "Chest Press": "Try push-ups or dumbbell chest presses.",
+    "Lat Pulldown": "Try dumbbell rows or resistance-band rows.",
+    "Treadmill": "Try brisk walking outdoors or using an exercise bike.",
+    "Exercise Bike": "Try the treadmill or an elliptical machine.",
+    "Dumbbells": "Try bodyweight exercises or resistance bands.",
+    "Barbell": "Try dumbbells or bodyweight exercises.",
+    "Bench Press": "Try push-ups or dumbbell chest presses."
+};
+
+const alternativeSuggestion =
+    status === "Occupied"
+        ? alternatives[item.name]
+        : null;
+
                     const statusClass = status.toLowerCase().replaceAll(" ", "-");
 
                     const reportedTime = item.reported_at
@@ -56,6 +73,12 @@ async function displayEquipment() {
                             <span class="status status-${statusClass}">
                                 ${escapeHTML(status)}
                             </span>
+                            ${alternativeSuggestion ? `
+    <p class="alternative-suggestion">
+        <strong>Alternative exercise:</strong>
+        ${escapeHTML(alternativeSuggestion)}
+    </p>
+` : ""}
 
                             <p class="reported-time">
                                 ${reportedTime
