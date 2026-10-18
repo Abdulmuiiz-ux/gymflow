@@ -48,6 +48,12 @@ equipmentContainer.innerHTML = `
         <option value="Cardio">Cardio</option>
         <option value="Free Weights">Free Weights</option>
     </select>
+    <select id="availabilityFilter" aria-label="Filter by availability">
+        <option value="all">All statuses</option>
+        <option value="Available">Available only</option>
+        <option value="Occupied">Occupied only</option>
+        <option value="Out of Service">Out of Service only</option>
+    </select>
 </div>
 
             <div class="equipment-grid">
