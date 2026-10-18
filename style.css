@@ -336,3 +336,30 @@ footer {
     margin-bottom: 4px;
     color: #108052;
 }
+
+/* Equipment availability status colours */
+
+.status-available {
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #86efac;
+}
+
+.status-occupied {
+    background-color: #ffedd5;
+    color: #9a3412;
+    border: 1px solid #fdba74;
+}
+
+.status-out-of-service {
+    background-color: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fca5a5;
+}
+
+.status-unknown {
+    background-color: #f3f4f6;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
