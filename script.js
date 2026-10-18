@@ -201,13 +201,15 @@ function escapeHTML(value) {
 function setupEquipmentFilters() {
     const searchInput = document.querySelector("#equipmentSearch");
     const categoryFilter = document.querySelector("#categoryFilter");
+    const availabilityFilter = document.querySelector("#availabilityFilter");
     const equipmentGrid = document.querySelector(".equipment-grid");
 
-    if (!searchInput || !categoryFilter || !equipmentGrid) return;
-
+    if (!searchInput || !categoryFilter || !availabilityFilter || !equipmentGrid) return;
+    
     function filterEquipment() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         const selectedCategory = categoryFilter.value;
+        const selectedAvailability = availabilityFilter.value;
 
         const equipmentCards = equipmentGrid.querySelectorAll(".equipment-card");
         let visibleCards = 0;
@@ -225,7 +227,15 @@ function setupEquipmentFilters() {
                 selectedCategory === "all" ||
                 equipmentCategory === selectedCategory;
 
-            const matches = matchesName && matchesCategory;
+            const equipmentStatus =
+    card.querySelector(".status").textContent.trim();
+
+const matchesAvailability =
+    selectedAvailability === "all" ||
+    equipmentStatus === selectedAvailability;
+
+const matches =
+    matchesName && matchesCategory && matchesAvailability;
 
             card.style.display = matches ? "" : "none";
 
@@ -254,6 +264,7 @@ function setupEquipmentFilters() {
 
     searchInput.oninput = filterEquipment;
     categoryFilter.onchange = filterEquipment;
+    availabilityFilter.onchange = filterEquipment;
 
     filterEquipment();
 }
