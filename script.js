@@ -49,7 +49,7 @@ async function displayEquipment() {
                         : null;
 
                     return `
-                        <article class="equipment-card">
+                        <article class="equipment-card equipment-${item.equipment_id}">
                             <h3>${escapeHTML(item.name)}</h3>
                             <p>${escapeHTML(item.category)}</p>
 
