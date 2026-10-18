@@ -172,6 +172,7 @@ async function submitReport(equipmentId, status) {
         alert("Report submitted successfully! You can report this equipment again in 10 seconds.");
 
         await displayEquipment();
+        setupEquipmentFilters();
 
     } catch (error) {
         console.error("Error submitting report:", error);
@@ -192,7 +193,8 @@ function escapeHTML(value) {
     })[character]);
 }
     
-displayEquipment().then(() => {
+
+function setupEquipmentFilters() {
     const searchInput = document.querySelector("#equipmentSearch");
     const categoryFilter = document.querySelector("#categoryFilter");
 
@@ -208,8 +210,8 @@ displayEquipment().then(() => {
             const equipmentName =
                 card.querySelector("h3").textContent.toLowerCase();
 
-            const equipmentCategory =
-                card.querySelector("p").textContent.trim();
+            const categoryElement = card.querySelector("p");
+            const equipmentCategory = categoryElement.textContent.trim();
 
             const matchesName = equipmentName.includes(searchTerm);
 
@@ -222,6 +224,10 @@ displayEquipment().then(() => {
         });
     }
 
-    searchInput.addEventListener("input", filterEquipment);
-    categoryFilter.addEventListener("change", filterEquipment);
-});
+    searchInput.oninput = filterEquipment;
+    categoryFilter.onchange = filterEquipment;
+
+    filterEquipment();
+}
+
+displayEquipment().then(setupEquipmentFilters);
