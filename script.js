@@ -50,9 +50,6 @@ equipmentContainer.innerHTML = `
     </select>
 </div>
 
-    <div class="equipment-grid">
-
-
             <div class="equipment-grid">
                 ${data.map(item => {
                     const status = item.status || "Unknown";
@@ -89,7 +86,7 @@ const alternativeSuggestion =
                     return `
                         <article class="equipment-card equipment-${item.equipment_id}">
                             <h3>${escapeHTML(item.name)}</h3>
-                            <p>${escapeHTML(item.category)}</p>
+                            <p class="equipment-category">${escapeHTML(item.category)}</p>
 
                             <span class="status status-${statusClass}">
                                 ${escapeHTML(status)}
@@ -214,7 +211,7 @@ function setupEquipmentFilters() {
                 card.querySelector("h3").textContent.toLowerCase();
 
             const equipmentCategory =
-                card.querySelector("p").textContent.trim();
+                card.querySelector(".equipment-category").textContent.trim();
 
             const matchesName = equipmentName.includes(searchTerm);
 
@@ -249,11 +246,6 @@ function setupEquipmentFilters() {
         }
     }
 
-    searchInput.oninput = filterEquipment;
-    categoryFilter.onchange = filterEquipment;
-
-    filterEquipment();
-}
     searchInput.oninput = filterEquipment;
     categoryFilter.onchange = filterEquipment;
 
