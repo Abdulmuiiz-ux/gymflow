@@ -363,3 +363,31 @@ footer {
     border: 1px solid #d1d5db;
 }
 
+/* Equipment search bar */
+
+.equipment-search {
+    margin: 20px 0;
+    max-width: 450px;
+}
+
+.equipment-search input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e9e3;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #172a22;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.equipment-search input:focus {
+    border-color: #16a36a;
+    box-shadow: 0 0 0 3px rgba(22, 163, 106, 0.15);
+}
+
+.equipment-search input::placeholder {
+    color: #687970;
+}
