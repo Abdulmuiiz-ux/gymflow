@@ -194,24 +194,27 @@ function escapeHTML(value) {
 }
     
 
+
 function setupEquipmentFilters() {
     const searchInput = document.querySelector("#equipmentSearch");
     const categoryFilter = document.querySelector("#categoryFilter");
+    const equipmentGrid = document.querySelector(".equipment-grid");
 
-    if (!searchInput || !categoryFilter) return;
+    if (!searchInput || !categoryFilter || !equipmentGrid) return;
 
     function filterEquipment() {
         const searchTerm = searchInput.value.toLowerCase().trim();
         const selectedCategory = categoryFilter.value;
 
-        const equipmentCards = document.querySelectorAll(".equipment-card");
+        const equipmentCards = equipmentGrid.querySelectorAll(".equipment-card");
+        let visibleCards = 0;
 
         equipmentCards.forEach(card => {
             const equipmentName =
                 card.querySelector("h3").textContent.toLowerCase();
 
-            const categoryElement = card.querySelector("p");
-            const equipmentCategory = categoryElement.textContent.trim();
+            const equipmentCategory =
+                card.querySelector("p").textContent.trim();
 
             const matchesName = equipmentName.includes(searchTerm);
 
@@ -219,11 +222,38 @@ function setupEquipmentFilters() {
                 selectedCategory === "all" ||
                 equipmentCategory === selectedCategory;
 
-            card.style.display =
-                matchesName && matchesCategory ? "" : "none";
+            const matches = matchesName && matchesCategory;
+
+            card.style.display = matches ? "" : "none";
+
+            if (matches) {
+                visibleCards++;
+            }
         });
+
+        let noResultsMessage =
+            document.querySelector("#noEquipmentResults");
+
+        if (visibleCards === 0) {
+            if (!noResultsMessage) {
+                noResultsMessage = document.createElement("p");
+                noResultsMessage.id = "noEquipmentResults";
+                noResultsMessage.className = "no-equipment-results";
+                noResultsMessage.textContent =
+                    "No equipment found. Try another search or select All equipment.";
+
+                equipmentGrid.appendChild(noResultsMessage);
+            }
+        } else if (noResultsMessage) {
+            noResultsMessage.remove();
+        }
     }
 
+    searchInput.oninput = filterEquipment;
+    categoryFilter.onchange = filterEquipment;
+
+    filterEquipment();
+}
     searchInput.oninput = filterEquipment;
     categoryFilter.onchange = filterEquipment;
 
