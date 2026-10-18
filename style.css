@@ -265,31 +265,31 @@ footer {
 .equipment-card::after {
     content: "";
     position: absolute;
-    top: 12px;
-    right: 8px;
-    width: 115px;
-    height: 115px;
+    top: 14px;
+    right: 10px;
+    width: 125px;
+    height: 125px;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    opacity: 0.13;
+    opacity: 0.14;
     pointer-events: none;
     z-index: -1;
 }
 
-/* Leg Press */
+/* Leg Press machine */
 .equipment-1::after {
     background-image: url("https://api.iconify.design/mdi/weight-lifter.svg?color=%2316a36a");
 }
 
-/* Chest Press */
+/* Chest Press machine */
 .equipment-2::after {
-    background-image: url("https://api.iconify.design/mdi/dumbbell.svg?color=%2316a36a");
+    background-image: url("https://api.iconify.design/mdi/seat.svg?color=%2316a36a");
 }
 
-/* Lat Pulldown */
+/* Lat Pulldown cable machine */
 .equipment-3::after {
-    background-image: url("https://api.iconify.design/mdi/arm-flex.svg?color=%2316a36a");
+    background-image: url("https://api.iconify.design/mdi/cable-data.svg?color=%2316a36a");
 }
 
 /* Treadmill */
